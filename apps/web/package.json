@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "build:vercel": "tsc --noEmit -p tsconfig.json && vite build --outDir ../../public --emptyOutDir",
     "preview": "vite preview"
   },
   "dependencies": {

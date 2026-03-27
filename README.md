@@ -25,6 +25,8 @@ fullstack-auth-starter/
 
 ## Quick start
 
+### Local development
+
 1. Install dependencies:
 
    ```bash
@@ -52,7 +54,50 @@ fullstack-auth-starter/
 
 5. Open `http://localhost:5173`.
 
+Local development runs as two processes:
+
+- Vite frontend on `http://localhost:5173`
+- Express API on `http://localhost:4000`
+
 Postgres is mapped to host port `5433` by default so the starter is less likely to collide with an existing local database.
+
+## Vercel deployment
+
+This repo is configured to deploy as a single Vercel project.
+
+- Keep one GitHub repository
+- Create one Vercel project from the repo root
+- Use a hosted Postgres database in production
+
+### How deployment differs from local development
+
+- Local development still runs `apps/web` and `apps/api` as separate processes
+- Vercel uses the root `app.ts` entrypoint for the Express app
+- The frontend is built into the root `public/` directory during the Vercel build
+- Non-`/api` routes are rewritten to `index.html` so the React SPA handles routing
+
+### Vercel settings
+
+- Root Directory: `.`
+- Framework Preset: `Other`
+- Install Command: `npm install`
+- Build Command: `npm run build:vercel`
+- Output Directory: leave blank
+
+### Production environment variables
+
+- `DATABASE_URL`
+- `JWT_SECRET`
+
+`CLIENT_ORIGIN` is only needed for local split-origin development. In the single-project Vercel deployment, the frontend and API share the same origin.
+
+### Production database setup
+
+After creating your hosted Postgres database, run the Prisma migration against it before using the deployed app:
+
+```bash
+npm run db:migrate -w @starter/api
+```
 
 ## Default seeded credentials
 
@@ -77,6 +122,7 @@ Postgres is mapped to host port `5433` by default so the starter is less likely 
 
 - `npm run dev` starts both apps
 - `npm run build` builds both apps
+- `npm run build:vercel` builds the single-project Vercel deployment shape
 - `npm run db:start` starts Postgres
 - `npm run db:stop` stops Postgres
 - `npm run db:setup` generates Prisma client, applies migrations, and seeds demo data

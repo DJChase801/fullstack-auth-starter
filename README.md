@@ -72,7 +72,7 @@ This repo is configured to deploy as a single Vercel project.
 ### How deployment differs from local development
 
 - Local development still runs `apps/web` and `apps/api` as separate processes
-- Vercel uses the root `app.ts` entrypoint for the Express app
+- Vercel uses the `api/` directory entrypoint for the backend function
 - The frontend is built into the root `public/` directory during the Vercel build
 - Non-`/api` routes are rewritten to `index.html` so the React SPA handles routing
 

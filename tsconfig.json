@@ -12,7 +12,7 @@
     "noEmit": true
   },
   "include": [
-    "app.ts",
+    "api/**/*.ts",
     "apps/api/src/**/*.d.ts"
   ]
 }

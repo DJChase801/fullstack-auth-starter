@@ -29,7 +29,9 @@ app.use(cookieParser());
 app.use(attachAuth);
 
 app.use("/api/health", healthRouter);
+app.use("/health", healthRouter);
 app.use("/api/auth", authRouter);
+app.use("/auth", authRouter);
 
 app.get("*", (request, response, next) => {
   if (request.path.startsWith("/api")) {

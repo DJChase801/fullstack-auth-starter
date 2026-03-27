@@ -1,8 +1,4 @@
-type AppType = typeof import("../apps/api/src/app.js")["default"];
-type AppRequest = Parameters<AppType>[0];
-type AppResponse = Parameters<AppType>[1];
-
-export default async function handler(request: AppRequest, response: AppResponse) {
+export default async function handler(request, response) {
   try {
     const { default: app } = await import("../apps/api/src/app.js");
     return app(request, response);

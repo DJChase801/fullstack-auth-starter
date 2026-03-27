@@ -87,7 +87,10 @@ This repo is configured to deploy as a single Vercel project.
 ### Production environment variables
 
 - `DATABASE_URL`
+- `DIRECT_URL`
 - `JWT_SECRET`
+
+`DATABASE_URL` should be the pooled runtime connection string when your provider offers one. `DIRECT_URL` should be the direct connection string for Prisma CLI commands like migrations.
 
 `CLIENT_ORIGIN` is only needed for local split-origin development. In the single-project Vercel deployment, the frontend and API share the same origin.
 

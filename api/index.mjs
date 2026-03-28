@@ -12,19 +12,13 @@ function getNormalizedPath(routeParam) {
 }
 
 function normalizeRequestUrl(request) {
-  const url = new URL(request.url ?? "/", "http://localhost");
-  const currentPath = url.pathname;
-
-  if (currentPath !== "/" && !currentPath.includes("[...route]")) {
-    return;
-  }
-
   const routeParam = request.query?.["...route"] ?? request.query?.route;
 
   if (!routeParam) {
     return;
   }
 
+  const url = new URL(request.url ?? "/", "http://localhost");
   const searchParams = new URLSearchParams(url.search);
 
   searchParams.delete("...route");

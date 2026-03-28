@@ -1,5 +1,39 @@
+function getNormalizedPath(routeParam) {
+  const rawSegments = Array.isArray(routeParam) ? routeParam : [routeParam];
+  const segments = rawSegments
+    .flatMap((segment) => String(segment).split("/"))
+    .filter(Boolean);
+
+  if (segments.length === 0) {
+    return "/";
+  }
+
+  return `/${segments.join("/")}`;
+}
+
+function normalizeRequestUrl(request) {
+  const routeParam = request.query?.["...route"] ?? request.query?.route;
+
+  if (!routeParam) {
+    return;
+  }
+
+  const url = new URL(request.url ?? "/", "http://localhost");
+  const searchParams = new URLSearchParams(url.search);
+
+  searchParams.delete("...route");
+  searchParams.delete("route");
+
+  const normalizedPath = getNormalizedPath(routeParam);
+  const normalizedSearch = searchParams.toString();
+
+  request.url = normalizedSearch ? `${normalizedPath}?${normalizedSearch}` : normalizedPath;
+}
+
 export default async function handler(request, response) {
   try {
+    normalizeRequestUrl(request);
+
     const { default: app } = await import("../apps/api/src/app.js");
     return app(request, response);
   } catch (error) {

@@ -40,7 +40,7 @@ export default async function handler(request, response) {
   try {
     normalizeRequestUrl(request);
 
-    const { default: app } = await import("../apps/api/src/app.js");
+    const { default: app } = await import("../apps/api/dist/src/app.js");
     return app(request, response);
   } catch (error) {
     console.error("Vercel function boot failed.", {

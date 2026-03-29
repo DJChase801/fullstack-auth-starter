@@ -23,6 +23,69 @@ fullstack-auth-starter/
   .env.example
 ```
 
+## Start a new app from this boilerplate
+
+Recommended flow: copy the code, give the new app its own Git history, then connect it to a new remote.
+
+1. Clone this repo into a new folder:
+
+   ```bash
+   git clone <current-boilerplate-repo-url> my-new-app
+   cd my-new-app
+   ```
+
+2. Remove the inherited Git history and initialize a new repo:
+
+   ```bash
+   rm -rf .git
+   git init
+   git branch -M main
+   ```
+
+3. Replace the starter branding values listed in the checklist below.
+
+4. Reinstall dependencies so `package-lock.json` reflects any renamed packages:
+
+   ```bash
+   npm install
+   ```
+
+5. Create the first commit for the new app:
+
+   ```bash
+   git add .
+   git commit -m "Initial commit from boilerplate"
+   ```
+
+6. Create a new empty repository on GitHub, then connect and push:
+
+   ```bash
+   git remote add origin git@github.com:<your-org>/<your-new-repo>.git
+   git push -u origin main
+   ```
+
+If you want to keep the original commit history, skip the `rm -rf .git` and `git init` steps and replace the `origin` remote instead.
+
+## Branding checklist
+
+These are the main places to replace the starter's default branding and naming:
+
+- `README.md`: update the app name and any starter-specific setup notes.
+- `package.json`: replace the root package name `fullstack-auth-starter`.
+- `apps/api/package.json` and `apps/web/package.json`: replace the workspace package names `@starter/api` and `@starter/web`. If you rename them, also update the workspace references in the root `package.json`.
+- `apps/web/index.html`: replace the browser tab title `Fullstack Auth Starter`.
+- `apps/web/src/pages/AuthPage.tsx`: replace the starter marketing copy on the auth screen.
+- `apps/web/src/pages/DashboardPage.tsx`: replace the default post-login placeholder content.
+- `.env.example` and `.env`: replace seeded values like `SEED_OWNER_NAME=Starter Owner`, `SEED_ORG_NAME=Starter Organization`, and the local database name `starter_app` if you want app-specific local data.
+- `docker-compose.yml`: align `container_name` and `POSTGRES_DB` with the new app name if you do not want starter defaults locally.
+- `apps/api/src/lib/jwt.ts`: rename the session cookie `starter_session` if you want browser cookies to be app-specific.
+
+To catch leftovers quickly, run:
+
+```bash
+rg -n "Fullstack Auth Starter|fullstack-auth-starter|starter_app|@starter|starter_session|Starter " .
+```
+
 ## Quick start
 
 ### Local development
